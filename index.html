@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RoamPort - 数字港口，探索自我同一性、价值确认与归属感的沉浸式体验">
+    <title>RoamPort | 数字港口</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'port-dark': '#0a0e17',
+                        'port-deep': '#121a29',
+                        'port-primary': '#165DFF',
+                        'port-secondary': '#2563EB',
+                        'port-nebula': '#7C3AED',
+                        'port-star': '#3B82F6',
+                        'port-cyan': '#06B6D4',
+                    },
+                    fontFamily: {
+                        'heading': ['Inter', 'sans-serif'],
+                        'body': ['Open Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'breathe': 'breathe 5s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                        'nebula-drift': 'nebulaDrift 20s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+                            '50%': { transform: 'scale(1.05)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)' },
+                            '50%': { boxShadow: '0 0 60px rgba(6, 182, 212, 0.6)' },
+                        },
+                        nebulaDrift: {
+                            '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+                            '25%': { transform: 'translate(10px, -10px) scale(1.05)' },
+                            '50%': { transform: 'translate(-5px, 5px) scale(0.95)' },
+                            '75%': { transform: 'translate(-10px, -5px) scale(1.02)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --color-primary: #165DFF;
+                --color-secondary: #2563EB;
+                --color-nebula: #7C3AED;
+                --color-star: #3B82F6;
+                --color-cyan: #06B6D4;
+                --color-dark: #0a0e17;
+                --color-deep: #121a29;
+                --glass-bg: rgba(255, 255, 255, 0.08);
+                --glass-border: rgba(255, 255, 255, 0.15);
+                --glass-blur: 12px;
+                --card-radius: 16px;
+                --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            * {
+                scroll-behavior: smooth;
+            }
+            
+            body {
+                font-family: 'Open Sans', sans-serif;
+                background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-deep) 50%, #0f172a 100%);
+                color: #ffffff;
+                overflow-x: hidden;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Inter', sans-serif;
+            }
+        }
+        
+        @layer components {
+            .glass-card {
+                background: var(--glass-bg);
+                backdrop-filter: blur(var(--glass-blur));
+                -webkit-backdrop-filter: blur(var(--glass-blur));
+                border: 1px solid var(--glass-border);
+                border-radius: var(--card-radius);
+                transition: all var(--transition-smooth);
+            }
+            
+            .glass-card:hover {
+                transform: scale(1.03);
+                filter: brightness(1.1);
+                border-color: rgba(255, 255, 255, 0.25);
+            }
+            
+            .glass-button {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 50px;
+                padding: 12px 32px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .glass-button:hover {
+                transform: scale(1.08);
+                background: rgba(255, 255, 255, 0.15);
+                box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);
+            }
+            
+            .nebula-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden;
+            }
+            
+            .nebula-orb {
+                position: absolute;
+                border-radius: 50%;
+                filter: blur(80px);
+                opacity: 0.4;
+                animation: nebulaDrift 20s ease-in-out infinite;
+            }
+            
+            .identity-tag {
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 50px;
+                padding: 10px 24px;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                white-space: nowrap;
+            }
+            
+            .identity-tag:hover {
+                background: rgba(6, 182, 212, 0.2);
+                border-color: rgba(6, 182, 212, 0.5);
+                transform: translateY(-2px);
+            }
+            
+            .identity-tag.active {
+                background: rgba(6, 182, 212, 0.3);
+                border-color: var(--color-cyan);
+                box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            }
+            
+            .timeline-line {
+                background: linear-gradient(180deg, var(--color-star), var(--color-nebula));
+            }
+            
+            .timeline-node {
+                box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+            }
+            
+            .network-canvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .section-fade-in {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .section-fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .breathing-ring {
+                animation: breathe 5s ease-in-out infinite;
+            }
+            
+            .nav-scrolled {
+                background: rgba(10, 14, 23, 0.85) !important;
+                backdrop-filter: blur(20px);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 星云背景 -->
+    <div class="nebula-bg" aria-hidden="true">
+        <div class="nebula-orb w-96 h-96 bg-gradient-to-br from-port-primary/30 to-port-nebula/20 top-0 left-1/4"></div>
+        <div class="nebula-orb w-80 h-80 bg-gradient-to-br from-port-nebula/25 to-port-cyan/15 top-1/3 right-1/4" style="animation-delay: -5s;"></div>
+        <div class="nebula-orb w-72 h-72 bg-gradient-to-br from-port-star/20 to-port-primary/25 bottom-1/4 left-1/3" style="animation-delay: -10s;"></div>
+        <div class="nebula-orb w-64 h-64 bg-gradient-to-br from-port-cyan/20 to-port-nebula/30 bottom-0 right-1/3" style="animation-delay: -15s;"></div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4 px-6 lg:px-12" role="navigation" aria-label="主导航">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="font-heading text-2xl font-bold text-white tracking-tight">
+                <span class="text-port-cyan">Roam</span>Port
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium">我是谁</a>
+                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium">我重要吗</a>
+                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium">我属于哪</a>
+            </div>
+            <button class="md:hidden text-white p-2" aria-label="打开菜单" id="mobile-menu-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+            <div class="flex flex-col gap-4">
+                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">我是谁</a>
+                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">我重要吗</a>
+                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">我属于哪</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 第一章：核心港口 - 我是谁 -->
+    <section id="identity" class="min-h-screen flex items-center justify-center relative px-4 py-20" aria-labelledby="identity-heading">
+        <div class="max-w-6xl mx-auto w-full section-fade-in">
+            <div class="text-center mb-12">
+                <h2 id="identity-heading" class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-port-cyan to-port-star bg-clip-text text-transparent">核心港口</span>
+                </h2>
+                <p class="text-white/60 text-lg font-body">我是谁 · 自我同一性的探索</p>
+            </div>
+            
+            <div class="relative flex items-center justify-center min-h-[500px]">
+                <!-- 呼吸圆环 -->
+                <div id="identity-ring" class="breathing-ring w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full border-2 border-port-cyan/50 flex items-center justify-center relative" style="box-shadow: 0 0 50px rgba(6, 182, 212, 0.5);">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-br from-port-cyan/10 to-port-primary/10 animate-pulse-glow"></div>
+                    <div id="identity-content" class="text-center p-8 z-10 transition-all duration-500">
+                        <div id="identity-icon" class="text-5xl mb-4">🧭</div>
+                        <h3 id="identity-title" class="font-heading text-2xl md:text-3xl font-semibold mb-2">探索者</h3>
+                        <p id="identity-desc" class="text-white/70 text-sm md:text-base max-w-xs mx-auto">在无尽的可能性中寻找方向，每一次选择都是自我的定义</p>
+                    </div>
+                </div>
+                
+                <!-- 身份标签 -->
+                <div class="absolute inset-0 pointer-events-none">
+                    <!-- 标签将通过JS动态定位 -->
+                </div>
+            </div>
+            
+            <!-- 标签容器 -->
+            <div id="identity-tags" class="flex flex-wrap justify-center gap-3 mt-12 max-w-3xl mx-auto" role="tablist" aria-label="身份维度选择">
+                <!-- 标签由JS生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二章：光芒映射 - 我重要吗 -->
+    <section id="value" class="min-h-screen flex items-center relative px-4 py-20" aria-labelledby="value-heading">
+        <div class="max-w-6xl mx-auto w-full section-fade-in">
+            <div class="text-center mb-16">
+                <h2 id="value-heading" class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-port-star to-port-nebula bg-clip-text text-transparent">光芒映射</span>
+                </h2>
+                <p class="text-white/60 text-lg font-body">我重要吗 · 价值与能力的确认</p>
+            </div>
+            
+            <!-- 时间轴 -->
+            <div class="relative">
+                <!-- 时间轴线 -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full timeline-line rounded-full"></div>
+                
+                <!-- 内容块 -->
+                <div class="space-y-12 md:space-y-0">
+                    <!-- 项目1 -->
+                    <div class="md:flex md:items-center md:justify-between md:mb-16 relative">
+                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-port-nebula rounded-full timeline-node z-10"></div>
+                        <div class="md:w-5/12 md:text-right md:pr-12">
+                            <div class="glass-card p-6 md:p-8">
+                                <div class="text-port-cyan text-sm font-medium mb-2">2024</div>
+                                <h3 class="font-heading text-xl font-semibold mb-3">深度连接系统</h3>
+                                <p class="text-white/70 text-sm leading-relaxed">构建基于共鸣而非算法的社交网络，让真实的灵魂相遇，创造有意义的数字连接体验。</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block md:w-5/12 md:pl-12"></div>
+                    </div>
+                    
+                    <!-- 项目2 -->
+                    <div class="md:flex md:items-center md:justify-between md:mb-16 relative">
+                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-port-star rounded-full timeline-node z-10"></div>
+                        <div class="hidden md:block md:w-5/12 md:pr-12"></div>
+                        <div class="md:w-5/12 md:pl-12">
+                            <div class="glass-card p-6 md:p-8">
+                                <div class="text-port-cyan text-sm font-medium mb-2">2023</div>
+                                <h3 class="font-heading text-xl font-semibold mb-3">身份叙事平台</h3>
+                                <p class="text-white/70 text-sm leading-relaxed">开发多维度身份表达工具，帮助用户在数字空间中构建完整、真实的自我形象。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 项目3 -->
+                    <div class="md:flex md:items-center md:justify-between md:mb-16 relative">
+                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-port-primary rounded-full timeline-node z-10"></div>
+                        <div class="md:w-5/12 md:text-right md:pr-12">
+                            <div class="glass-card p-6 md:p-8">
+                                <div class="text-port-cyan text-sm font-medium mb-2">2022</div>
+                                <h3 class="font-heading text-xl font-semibold mb-3">心理安全空间</h3>
+                                <p class="text-white/70 text-sm leading-relaxed">创建无评判的数字环境，让用户能够自由探索、表达脆弱，建立深层信任。</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block md:w-5/12 md:pl-12"></div>
+                    </div>
+                    
+                    <!-- 项目4 -->
+                    <div class="md:flex md:items-center md:justify-between relative">
+                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-port-cyan rounded-full timeline-node z-10"></div>
+                        <div class="hidden md:block md:w-5/12 md:pr-12"></div>
+                        <div class="md:w-5/12 md:pl-12">
+                            <div class="glass-card p-6 md:p-8">
+                                <div class="text-port-cyan text-sm font-medium mb-2">2021</div>
+                                <h3 class="font-heading text-xl font-semibold mb-3">归属感引擎</h3>
+                                <p class="text-white/70 text-sm leading-relaxed">设计智能社群匹配系统，基于价值观和兴趣连接志同道合的灵魂。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三章：共鸣锚点 - 我属于哪 -->
+    <section id="belonging" class="min-h-screen flex items-center justify-center relative px-4 py-20 overflow-hidden" aria-labelledby="belonging-heading">
+        <!-- 网络画布 -->
+        <canvas id="network-canvas" class="network-canvas" aria-hidden="true"></canvas>
+        
+        <div class="max-w-4xl mx-auto w-full relative z-10 section-fade-in">
+            <div class="text-center mb-12">
+                <h2 id="belonging-heading" class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-port-nebula to-port-cyan bg-clip-text text-transparent">共鸣锚点</span>
+                </h2>
+                <p class="text-white/60 text-lg font-body">我属于哪 · 归属感的追寻</p>
+            </div>
+            
+            <!-- 共鸣宣言 -->
+            <div class="glass-card p-8 md:p-12 lg:p-16 text-center mb-12 max-w-3xl mx-auto">
+                <blockquote class="font-body text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed tracking-wide" style="letter-spacing: 0.05rem; line-height: 1.8;">
+                    "在<span class="text-port-cyan font-semibold">RoamPort</span>，每一个独立的灵魂都是一个坐标。我们不通过算法操纵，我们通过<span class="text-port-star font-semibold">共鸣</span>相遇。"
+                </blockquote>
+            </div>
+            
+            <!-- 寻找共鸣按钮 -->
+            <div class="text-center">
+                <button id="find-resonance-btn" class="glass-button text-white font-heading font-medium text-lg" aria-haspopup="dialog">
+                    寻找共鸣
+                </button>
+            </div>
+        </div>
+        
+        <!-- 模态框 -->
+        <div id="resonance-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-overlay"></div>
+            <div class="glass-card p-8 max-w-md w-full relative z-10 transform scale-95 opacity-0 transition-all duration-300" id="modal-content">
+                <button id="close-modal" class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors" aria-label="关闭">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <h3 id="modal-title" class="font-heading text-2xl font-semibold mb-4 text-port-cyan">欢迎来到 RoamPort</h3>
+                <p class="text-white/80 mb-6 leading-relaxed">在这里，你的独特性被珍视，你的声音被倾听。我们正在构建一个基于真实共鸣的社区，期待与你相遇。</p>
+                <div class="flex flex-col gap-3">
+                    <button class="glass-button text-white w-full text-center" onclick="alert('感谢你的兴趣！我们即将开放注册。')">
+                        加入等待列表
+                    </button>
+                    <button class="text-white/60 hover:text-white text-sm transition-colors" id="modal-cancel">
+                        稍后再说
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-8 px-4 text-center relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <p class="text-white/40 text-sm font-body">
+                &copy; 2024 RoamPort. 在数字宇宙中寻找归属。
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 身份标签数据
+        const identityData = [
+            { id: 'explorer', label: '探索者', icon: '🧭', color: '#06B6D4', desc: '在无尽的可能性中寻找方向，每一次选择都是自我的定义' },
+            { id: 'creator', label: '创造者', icon: '✨', color: '#7C3AED', desc: '将想象转化为现实，用双手塑造内心深处的愿景' },
+            { id: 'thinker', label: '思考者', icon: '🔮', color: '#3B82F6', desc: '在静默中寻找真理，用理性之光照亮未知的领域' },
+            { id: 'connector', label: '连接者', icon: '🔗', color: '#165DFF', desc: '搭建心灵的桥梁，让孤立的灵魂找到彼此' },
+            { id: 'dreamer', label: '梦想家', icon: '🌟', color: '#06B6D4', desc: '仰望星空，在梦境中预演未来的无限可能' },
+            { id: 'guardian', label: '守护者', icon: '🛡️', color: '#2563EB', desc: '保护内心的火焰，在风雨中坚守真实的自我' },
+            { id: 'wanderer', label: '漫游者', icon: '🌊', color: '#7C3AED', desc: '不受边界限制，在广阔的世界中寻找答案' },
+            { id: 'seeker', label: '追寻者', icon: '🔍', color: '#3B82F6', desc: '永不停歇的追问，在探索中接近生命的本质' },
+        ];
+
+        // 当前激活的身份
+        let currentIdentity = identityData[0];
+
+        // 初始化身份标签
+        function initIdentityTags() {
+            const container = document.getElementById('identity-tags');
+            
+            identityData.forEach((identity, index) => {
+                const tag = document.createElement('button');
+                tag.className = `identity-tag ${index === 0 ? 'active' : ''}`;
+                tag.textContent = identity.label;
+                tag.setAttribute('role', 'tab');
+                tag.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+                tag.setAttribute('aria-controls', 'identity-content');
+                tag.setAttribute('tabindex', index === 0 ? '0' : '-1');
+                
+                tag.addEventListener('click', () => selectIdentity(identity, tag));
+                tag.addEventListener('keydown', (e) => handleTagKeydown(e, index));
+                
+                container.appendChild(tag);
+            });
+        }
+
+        // 选择身份
+        function selectIdentity(identity, clickedTag) {
+            currentIdentity = identity;
+            
+            // 更新标签状态
+            document.querySelectorAll('.identity-tag').forEach(tag => {
+                tag.classList.remove('active');
+                tag.setAttribute('aria-selected', 'false');
+                tag.setAttribute('tabindex', '-1');
+            });
+            clickedTag.classList.add('active');
+            clickedTag.setAttribute('aria-selected', 'true');
+            clickedTag.setAttribute('tabindex', '0');
+            
+            // 更新圆环内容
+            const ring = document.getElementById('identity-ring');
+            const icon = document.getElementById('identity-icon');
+            const title = document.getElementById('identity-title');
+            const desc = document.getElementById('identity-desc');
+            
+            // 淡出
+            ring.style.opacity = '0.5';
+            ring.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                icon.textContent = identity.icon;
+                title.textContent = identity.label;
+                desc.textContent = identity.desc;
+                
+                // 更新圆环颜色
+                ring.style.borderColor = identity.color + '80';
+                ring.style.boxShadow = `0 0 50px ${identity.color}80`;
+                
+                // 淡入
+                ring.style.opacity = '1';
+                ring.style.transform = 'scale(1)';
+            }, 250);
+        }
+
+        // 键盘导航
+        function handleTagKeydown(e, currentIndex) {
+            const tags = document.querySelectorAll('.identity-tag');
+            let newIndex = currentIndex;
+            
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                newIndex = (currentIndex + 1) % tags.length;
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                newIndex = (currentIndex - 1 + tags.length) % tags.length;
+            } else if (e.key === 'Enter' || e.key === ' ') {
+                tags[currentIndex].click();
+                return;
+            }
+            
+            if (newIndex !== currentIndex) {
+                e.preventDefault();
+                tags[newIndex].focus();
+                tags[newIndex].click();
+            }
+        }
+
+        // 导航栏滚动效果
+        function initNavbar() {
+            const navbar = document.getElementById('navbar');
+            let lastScroll = 0;
+            
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 50) {
+                    navbar.classList.add('nav-scrolled');
+                } else {
+                    navbar.classList.remove('nav-scrolled');
+                }
+                
+                lastScroll = currentScroll;
+            }, { passive: true });
+        }
+
+        // 移动端菜单
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                const isExpanded = !menu.classList.contains('hidden');
+                btn.setAttribute('aria-expanded', isExpanded);
+            });
+            
+            // 点击链接后关闭菜单
+            menu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+        // 滚动渐入动画
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            document.querySelectorAll('.section-fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // 网络画布动画
+        function initNetworkCanvas() {
+            const canvas = document.getElementById('network-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            let width, height;
+            let particles = [];
+            let mouse = { x: null, y: null };
+            let animationId;
+            let isVisible = false;
+            
+            // 设置画布尺寸
+            function resize() {
+                const section = document.getElementById('belonging');
+                width = section.offsetWidth;
+                height = section.offsetHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticles();
+            }
+            
+            // 粒子类
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.baseSize = Math.random() * 3 + 2;
+                    this.size = this.baseSize;
+                    this.speedX = (Math.random() - 0.5) * 0.5;
+                    this.speedY = (Math.random() - 0.5) * 0.5;
+                    this.floatOffset = Math.random() * Math.PI * 2;
+                    this.floatSpeed = Math.random() * 0.02 + 0.01;
+                }
+                
+                update() {
+                    // 基础移动
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    // 浮动效果
+                    this.floatOffset += this.floatSpeed;
+                    this.x += Math.sin(this.floatOffset) * 0.3;
+                    this.y += Math.cos(this.floatOffset) * 0.3;
+                    
+                    // 边界检查
+                    if (this.x < 0 || this.x > width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > height) this.speedY *= -1;
+                    
+                    // 鼠标交互
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = mouse.x - this.x;
+                        const dy = mouse.y - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const maxDistance = 150;
+                        
+                        if (distance < maxDistance) {
+                            const scale = 1 + (1 - distance / maxDistance) * 2;
+                            this.size = Math.min(this.baseSize * scale, 15);
+                        } else {
+                            this.size = this.size * 0.95 + this.baseSize * 0.05;
+                        }
+                    } else {
+                        this.size = this.size * 0.95 + this.baseSize * 0.05;
+                    }
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(6, 182, 212, ${0.4 + (this.size - this.baseSize) / 20})`;
+                    ctx.fill();
+                    
+                    // 光晕效果
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = 'rgba(6, 182, 212, 0.5)';
+                }
+            }
+            
+            // 初始化粒子
+            function initParticles() {
+                particles = [];
+                const particleCount = Math.min(30, Math.floor((width * height) / 25000));
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            
+            // 绘制连接线
+            function drawConnections() {
+                const maxDistance = 120;
+                
+                for (let i = 0; i < particles.length; i++) {
+                    let connections = 0;
+                    for (let j = i + 1; j < particles.length && connections < 3; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < maxDistance) {
+                            const opacity = (1 - distance / maxDistance) * 0.3;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                            connections++;
+                        }
+                    }
+                }
+            }
+            
+            // 动画循环
+            function animate() {
+                if (!isVisible) return;
+                
+                ctx.clearRect(0, 0, width, height);
+                ctx.shadowBlur = 0;
+                
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                drawConnections();
+                
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // 鼠标事件
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+            
+            canvas.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+            
+            // 触摸事件支持
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                mouse.x = touch.clientX - rect.left;
+                mouse.y = touch.clientY - rect.top;
+            }, { passive: false });
+            
+            canvas.addEventListener('touchend', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+            
+            // 可见性观察
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible && !animationId) {
+                        animate();
+                    } else if (!isVisible && animationId) {
+                        cancelAnimationFrame(animationId);
+                        animationId = null;
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observer.observe(canvas);
+            
+            // 初始化
+            resize();
+            window.addEventListener('resize', resize);
+        }
+
+        // 模态框
+        function initModal() {
+            const btn = document.getElementById('find-resonance-btn');
+            const modal = document.getElementById('resonance-modal');
+            const overlay = document.getElementById('modal-overlay');
+            const closeBtn = document.getElementById('close-modal');
+            const cancelBtn = document.getElementById('modal-cancel');
+            const content = document.getElementById('modal-content');
+            
+            function openModal() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                
+                // 动画
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+                
+                closeBtn.focus();
+            }
+            
+            function closeModal() {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    document.body.style.overflow = '';
+                }, 300);
+                
+                btn.focus();
+            }
+            
+            btn.addEventListener('click', openModal);
+            overlay.addEventListener('click', closeModal);
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            
+            // ESC键关闭
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+            
+            // 焦点陷阱
+            modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') {
+                    const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+                    
+                    if (e.shiftKey && document.activeElement === firstElement) {
+                        e.preventDefault();
+                        lastElement.focus();
+                    } else if (!e.shiftKey && document.activeElement === lastElement) {
+                        e.preventDefault();
+                        firstElement.focus();
+                    }
+                }
+            });
+        }
+
+        // 初始化所有功能
+        document.addEventListener('DOMContentLoaded', () => {
+            initIdentityTags();
+            initNavbar();
+            initMobileMenu();
+            initScrollAnimations();
+            initNetworkCanvas();
+            initModal();
+        });
+    </script>
+</body>
+</html>
