@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RoamPort Privacy Policy - How we collect, use, and protect your personal information">
+    <title>Privacy Policy | RoamPort</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'port-dark': '#0a0e17',
+                        'port-deep': '#121a29',
+                        'port-primary': '#165DFF',
+                        'port-secondary': '#2563EB',
+                        'port-nebula': '#7C3AED',
+                        'port-star': '#3B82F6',
+                        'port-cyan': '#06B6D4',
+                    },
+                    fontFamily: {
+                        'heading': ['Inter', 'sans-serif'],
+                        'body': ['Open Sans', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --color-primary: #165DFF;
+                --color-secondary: #2563EB;
+                --color-nebula: #7C3AED;
+                --color-star: #3B82F6;
+                --color-cyan: #06B6D4;
+                --color-dark: #0a0e17;
+                --color-deep: #121a29;
+                --glass-bg: rgba(255, 255, 255, 0.08);
+                --glass-border: rgba(255, 255, 255, 0.15);
+                --glass-blur: 12px;
+                --card-radius: 16px;
+                --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            * {
+                scroll-behavior: smooth;
+            }
+            
+            body {
+                font-family: 'Open Sans', sans-serif;
+                background: linear-gradient(135deg, #05070a 0%, #0a0e17 25%, #121a29 50%, #0f172a 75%, #05070a 100%);
+                color: #ffffff;
+                overflow-x: hidden;
+                position: relative;
+            }
+            
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: 
+                    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+                background-size: 50px 50px;
+                z-index: -2;
+                animation: gridMove 20s linear infinite;
+            }
+            
+            @keyframes gridMove {
+                0% { transform: translate(0, 0); }
+                100% { transform: translate(50px, 50px); }
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Inter', sans-serif;
+            }
+        }
+        
+        @layer components {
+            .glass-card {
+                background: var(--glass-bg);
+                backdrop-filter: blur(var(--glass-blur));
+                -webkit-backdrop-filter: blur(var(--glass-blur));
+                border: 1px solid var(--glass-border);
+                border-radius: var(--card-radius);
+                transition: all var(--transition-smooth);
+            }
+            
+            .glass-button {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 50px;
+                padding: 12px 32px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .glass-button:hover {
+                transform: scale(1.08);
+                background: rgba(255, 255, 255, 0.15);
+                box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);
+            }
+            
+            .nebula-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden;
+                background: radial-gradient(ellipse at 20% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+                            radial-gradient(ellipse at 80% 80%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
+                            radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 星云背景 -->
+    <div class="nebula-bg" aria-hidden="true"></div>
+    
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 py-4 px-6 lg:px-12" role="navigation" aria-label="主导航">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-heading text-2xl font-bold text-white tracking-tight">
+                <span class="text-port-cyan">Roam</span>Port
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="min-h-screen flex items-center justify-center relative px-4 py-20">
+        <div class="max-w-4xl mx-auto w-full">
+            <div class="glass-card p-8 md:p-12">
+                <h2 id="privacy-policy-heading" class="font-heading text-3xl font-bold mb-6 text-port-cyan">Privacy Policy</h2>
+                <div class="space-y-4 text-white/80">
+                    <p>RoamPort is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information.</p>
+                    <h3 class="font-heading text-xl font-semibold mt-8 mb-4 text-white">1. Information Collection</h3>
+                    <p>We collect information you provide to us, such as your email address and any feedback you submit through our forms.</p>
+                    <h3 class="font-heading text-xl font-semibold mt-8 mb-4 text-white">2. Use of Information</h3>
+                    <p>We use your information to communicate with you, improve our services, and personalize your experience.</p>
+                    <h3 class="font-heading text-xl font-semibold mt-8 mb-4 text-white">3. Data Protection</h3>
+                    <p>We implement security measures to protect your personal information from unauthorized access and disclosure.</p>
+                    <h3 class="font-heading text-xl font-semibold mt-8 mb-4 text-white">4. Third-Party Sharing</h3>
+                    <p>We do not share your personal information with third parties without your consent.</p>
+                    <h3 class="font-heading text-xl font-semibold mt-8 mb-4 text-white">5. Changes to Policy</h3>
+                    <p>We may update this Privacy Policy from time to time. We will notify you of any significant changes.</p>
+                </div>
+                <div class="mt-12 text-center">
+                    <a href="index.html" class="glass-button text-white font-heading font-medium">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="py-8 px-4 text-center relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <p class="text-white/40 text-sm font-body mb-4">
+                &copy; RoamPort. Finding belonging in the digital universe.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
