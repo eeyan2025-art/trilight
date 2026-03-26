@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="RoamPort - 数字港口，探索自我同一性、价值确认与归属感的沉浸式体验">
-    <title>RoamPort | 数字港口</title>
+    <meta name="description" content="RoamPort - Digital Port, immersive experience exploring self-identity, value confirmation, and belonging">
+    <title>RoamPort | Digital Port</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -86,9 +86,30 @@
             
             body {
                 font-family: 'Open Sans', sans-serif;
-                background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-deep) 50%, #0f172a 100%);
+                background: linear-gradient(135deg, #05070a 0%, #0a0e17 25%, #121a29 50%, #0f172a 75%, #05070a 100%);
                 color: #ffffff;
                 overflow-x: hidden;
+                position: relative;
+            }
+            
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: 
+                    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+                background-size: 50px 50px;
+                z-index: -2;
+                animation: gridMove 20s linear infinite;
+            }
+            
+            @keyframes gridMove {
+                0% { transform: translate(0, 0); }
+                100% { transform: translate(50px, 50px); }
             }
             
             h1, h2, h3, h4, h5, h6 {
@@ -136,14 +157,53 @@
                 height: 100%;
                 z-index: -1;
                 overflow: hidden;
+                background: radial-gradient(ellipse at 20% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+                            radial-gradient(ellipse at 80% 80%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
+                            radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
             }
             
             .nebula-orb {
                 position: absolute;
                 border-radius: 50%;
                 filter: blur(80px);
-                opacity: 0.4;
+                opacity: 0.5;
                 animation: nebulaDrift 20s ease-in-out infinite;
+            }
+            
+            .nebula-orb::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 200%;
+                height: 200%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+                animation: pulseGlow 4s ease-in-out infinite;
+            }
+            
+            .star-field {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                pointer-events: none;
+            }
+            
+            .star {
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: white;
+                border-radius: 50%;
+                animation: twinkle 3s ease-in-out infinite;
+            }
+            
+            @keyframes twinkle {
+                0%, 100% { opacity: 0.3; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.5); }
             }
             
             .identity-tag {
@@ -205,10 +265,48 @@
                 background: rgba(10, 14, 23, 0.85) !important;
                 backdrop-filter: blur(20px);
             }
+            
+            .section-gradient-identity {
+                background: radial-gradient(ellipse at 30% 30%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            }
+            
+            .section-gradient-value {
+                background: radial-gradient(ellipse at 70% 20%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
+            }
+            
+            .section-gradient-belonging {
+                background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 60%);
+            }
+            
+            .cyber-lines {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+            }
+            
+            .cyber-line {
+                position: absolute;
+                background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.1), transparent);
+                height: 1px;
+                animation: scanLine 8s linear infinite;
+            }
+            
+            @keyframes scanLine {
+                0% { transform: translateY(-100%); opacity: 0; }
+                50% { opacity: 1; }
+                100% { transform: translateY(100vh); opacity: 0; }
+            }
         }
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- 星空背景 -->
+    <div class="star-field" id="star-field" aria-hidden="true"></div>
+    
     <!-- 星云背景 -->
     <div class="nebula-bg" aria-hidden="true">
         <div class="nebula-orb w-96 h-96 bg-gradient-to-br from-port-primary/30 to-port-nebula/20 top-0 left-1/4"></div>
@@ -224,11 +322,11 @@
                 <span class="text-port-cyan">Roam</span>Port
             </a>
             <div class="hidden md:flex items-center gap-8">
-                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium">被看见</a>
-                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium">被理解</a>
-                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium">被接纳</a>
+                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium">Seen</a>
+                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium">Understood</a>
+                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium">Accepted</a>
             </div>
-            <button class="md:hidden text-white p-2" aria-label="打开菜单" id="mobile-menu-btn">
+            <button class="md:hidden text-white p-2" aria-label="Open Menu" id="mobile-menu-btn">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -237,15 +335,22 @@
         <!-- 移动端菜单 -->
         <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
             <div class="flex flex-col gap-4">
-                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">被看见</a>
-                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">被理解</a>
-                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">被接纳</a>
+                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">Seen</a>
+                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">Understood</a>
+                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">Accepted</a>
             </div>
         </div>
     </nav>
 
-    <!-- 第一章：核心港口 - 我是谁 -->
-    <section id="identity" class="min-h-screen flex items-center justify-center relative px-4 py-20" aria-labelledby="identity-heading">
+    <!-- Chapter 1: Core Port - Who Am I -->
+    <section id="identity" class="min-h-screen flex items-center justify-center relative px-4 py-20 section-gradient-identity" aria-labelledby="identity-heading">
+        <div class="cyber-lines" aria-hidden="true">
+            <div class="cyber-line" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="cyber-line" style="left: 30%; animation-delay: 2s;"></div>
+            <div class="cyber-line" style="left: 50%; animation-delay: 4s;"></div>
+            <div class="cyber-line" style="left: 70%; animation-delay: 6s;"></div>
+            <div class="cyber-line" style="left: 90%; animation-delay: 8s;"></div>
+        </div>
         <div class="max-w-6xl mx-auto w-full section-fade-in">
             <div class="text-center mb-12">
                 <button id="iseeyou-btn" class="glass-button text-white font-heading font-medium text-xl md:text-2xl">
@@ -277,14 +382,20 @@
         </div>
     </section>
 
-    <!-- 第二章：光芒映射 - 我重要吗 -->
-    <section id="value" class="min-h-screen flex items-center relative px-4 py-20" aria-labelledby="value-heading">
+    <!-- Chapter 2: Light Mapping - Do I Matter -->
+    <section id="value" class="min-h-screen flex items-center relative px-4 py-20 section-gradient-value" aria-labelledby="value-heading">
+        <div class="cyber-lines" aria-hidden="true">
+            <div class="cyber-line" style="left: 15%; animation-delay: 1s;"></div>
+            <div class="cyber-line" style="left: 35%; animation-delay: 3s;"></div>
+            <div class="cyber-line" style="left: 55%; animation-delay: 5s;"></div>
+            <div class="cyber-line" style="left: 75%; animation-delay: 7s;"></div>
+        </div>
         <div class="max-w-6xl mx-auto w-full section-fade-in">
             <div class="text-center mb-16">
                 <h2 id="value-heading" class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-port-star to-port-nebula bg-clip-text text-transparent">光芒映射</span>
+                    <span class="bg-gradient-to-r from-port-star to-port-nebula bg-clip-text text-transparent">Light Mapping</span>
                 </h2>
-                <p class="text-white/60 text-lg font-body">我重要吗 · 价值与能力的确认</p>
+                <p class="text-white/60 text-lg font-body">Do I Matter · Value and Competence Confirmation</p>
             </div>
             
             <!-- 时间轴 -->
@@ -300,8 +411,8 @@
                         <div class="md:w-5/12 md:text-right md:pr-12">
                             <div class="glass-card p-6 md:p-8">
                                 <div class="text-port-cyan text-sm font-medium mb-2">2026</div>
-                                <h3 class="font-heading text-xl font-semibold mb-3">深度连接系统</h3>
-                                <p class="text-white/70 text-sm leading-relaxed">构建基于共鸣而非算法的社交网络，让真实的灵魂相遇，创造有意义的数字连接体验。</p>
+                                <h3 class="font-heading text-xl font-semibold mb-3">Deep Connection System</h3>
+                                <p class="text-white/70 text-sm leading-relaxed">Building a social network based on resonance rather than algorithms, allowing authentic souls to meet and create meaningful digital connection experiences.</p>
                             </div>
                         </div>
                         <div class="hidden md:block md:w-5/12 md:pl-12"></div>
@@ -314,8 +425,8 @@
                         <div class="md:w-5/12 md:pl-12">
                             <div class="glass-card p-6 md:p-8">
                                 <div class="text-port-cyan text-sm font-medium mb-2">2025</div>
-                                <h3 class="font-heading text-xl font-semibold mb-3">身份叙事平台</h3>
-                                <p class="text-white/70 text-sm leading-relaxed">开发多维度身份表达工具，帮助用户在数字空间中构建完整、真实的自我形象。</p>
+                                <h3 class="font-heading text-xl font-semibold mb-3">Identity Narrative Platform</h3>
+                                <p class="text-white/70 text-sm leading-relaxed">Developing multi-dimensional identity expression tools to help users build complete, authentic self-images in digital spaces.</p>
                             </div>
                         </div>
                     </div>
@@ -326,30 +437,36 @@
         </div>
     </section>
 
-    <!-- 第三章：共鸣锚点 - 我属于哪 -->
-    <section id="belonging" class="min-h-screen flex items-center justify-center relative px-4 py-20 overflow-hidden" aria-labelledby="belonging-heading">
-        <!-- 网络画布 -->
+    <!-- Chapter 3: Resonance Anchor - Where Do I Belong -->
+    <section id="belonging" class="min-h-screen flex items-center justify-center relative px-4 py-20 overflow-hidden section-gradient-belonging" aria-labelledby="belonging-heading">
+        <div class="cyber-lines" aria-hidden="true">
+            <div class="cyber-line" style="left: 20%; animation-delay: 0.5s;"></div>
+            <div class="cyber-line" style="left: 40%; animation-delay: 2.5s;"></div>
+            <div class="cyber-line" style="left: 60%; animation-delay: 4.5s;"></div>
+            <div class="cyber-line" style="left: 80%; animation-delay: 6.5s;"></div>
+        </div>
+        <!-- Network Canvas -->
         <canvas id="network-canvas" class="network-canvas" aria-hidden="true"></canvas>
         
         <div class="max-w-4xl mx-auto w-full relative z-10 section-fade-in">
             <div class="text-center mb-12">
                 <h2 id="belonging-heading" class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-port-nebula to-port-cyan bg-clip-text text-transparent">共鸣锚点</span>
+                    <span class="bg-gradient-to-r from-port-nebula to-port-cyan bg-clip-text text-transparent">Resonance Anchor</span>
                 </h2>
-                <p class="text-white/60 text-lg font-body">我属于哪 · 归属感的追寻</p>
+                <p class="text-white/60 text-lg font-body">Where Do I Belong · The Pursuit of Belonging</p>
             </div>
             
-            <!-- 共鸣宣言 -->
+            <!-- Resonance Manifesto -->
             <div class="glass-card p-8 md:p-12 lg:p-16 text-center mb-12 max-w-3xl mx-auto">
                 <blockquote class="font-body text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed tracking-wide" style="letter-spacing: 0.05rem; line-height: 1.8;">
-                    "在<span class="text-port-cyan font-semibold">RoamPort</span>，每一个独立的灵魂都是一个坐标。我们不通过算法操纵，我们通过<span class="text-port-star font-semibold">共鸣</span>相遇。"
+                    "At <span class="text-port-cyan font-semibold">RoamPort</span>, every independent soul is a coordinate. We don't manipulate through algorithms, we meet through <span class="text-port-star font-semibold">resonance</span>."
                 </blockquote>
             </div>
             
-            <!-- 寻找共鸣按钮 -->
+            <!-- Find Resonance Button -->
             <div class="text-center">
                 <button id="find-resonance-btn" class="glass-button text-white font-heading font-medium text-lg" aria-haspopup="dialog">
-                    寻找共鸣
+                    Find Resonance
                 </button>
             </div>
         </div>
@@ -358,28 +475,28 @@
         <div id="resonance-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-overlay"></div>
             <div class="glass-card p-8 max-w-md w-full relative z-10 transform scale-95 opacity-0 transition-all duration-300" id="modal-content">
-                <button id="close-modal" class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors" aria-label="关闭">
+                <button id="close-modal" class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors" aria-label="Close">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <h3 id="modal-title" class="font-heading text-2xl font-semibold mb-4 text-port-cyan">登记信息</h3>
-                <p class="text-white/80 mb-6 leading-relaxed">请留下你的信息，我们会与你取得联系。</p>
+                <h3 id="modal-title" class="font-heading text-2xl font-semibold mb-4 text-port-cyan">Register Information</h3>
+                <p class="text-white/80 mb-6 leading-relaxed">Please leave your information and we will contact you.</p>
                 <form id="resonance-form" class="space-y-4">
                     <div>
-                        <label for="email" class="block text-white/70 text-sm font-medium mb-2">邮箱地址</label>
-                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-port-cyan/50 text-white placeholder-white/40" placeholder="请输入你的邮箱">
+                        <label for="email" class="block text-white/70 text-sm font-medium mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-port-cyan/50 text-white placeholder-white/40" placeholder="Please enter your email">
                     </div>
                     <div>
-                        <label for="feedback" class="block text-white/70 text-sm font-medium mb-2">建议/反馈</label>
-                        <textarea id="feedback" name="feedback" rows="4" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-port-cyan/50 text-white placeholder-white/40" placeholder="请分享你的想法"></textarea>
+                        <label for="feedback" class="block text-white/70 text-sm font-medium mb-2">Suggestions / Feedback</label>
+                        <textarea id="feedback" name="feedback" rows="4" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-port-cyan/50 text-white placeholder-white/40" placeholder="Please share your thoughts"></textarea>
                     </div>
                     <div class="flex flex-col gap-3">
                         <button type="submit" class="glass-button text-white w-full text-center">
-                            提交
+                            Submit
                         </button>
                         <button type="button" class="text-white/60 hover:text-white text-sm transition-colors" id="modal-cancel">
-                            取消
+                            Cancel
                         </button>
                     </div>
                 </form>
@@ -391,11 +508,11 @@
     <footer class="py-8 px-4 text-center relative z-10">
         <div class="max-w-6xl mx-auto">
             <p class="text-white/40 text-sm font-body mb-4">
-                &copy; RoamPort. 在数字宇宙中寻找归属。
+                &copy; RoamPort. Finding belonging in the digital universe.
             </p>
             <div class="flex justify-center gap-6">
-                <a href="#" class="text-white/40 hover:text-white text-xs transition-colors">用户协议</a>
-                <a href="#" class="text-white/40 hover:text-white text-xs transition-colors">隐私协议</a>
+                <a href="#" class="text-white/40 hover:text-white text-xs transition-colors">User Agreement</a>
+                <a href="#" class="text-white/40 hover:text-white text-xs transition-colors">Privacy Policy</a>
             </div>
         </div>
     </footer>
@@ -404,14 +521,14 @@
     <script>
         // 身份标签数据
         const identityData = [
-            { id: 'explorer', label: '探索者', icon: '🧭', color: '#06B6D4', desc: '在无尽的可能性中寻找方向，每一次选择都是自我的定义' },
-            { id: 'creator', label: '创造者', icon: '✨', color: '#7C3AED', desc: '将想象转化为现实，用双手塑造内心深处的愿景' },
-            { id: 'thinker', label: '思考者', icon: '🔮', color: '#3B82F6', desc: '在静默中寻找真理，用理性之光照亮未知的领域' },
-            { id: 'connector', label: '连接者', icon: '🔗', color: '#165DFF', desc: '搭建心灵的桥梁，让孤立的灵魂找到彼此' },
-            { id: 'dreamer', label: '梦想家', icon: '🌟', color: '#06B6D4', desc: '仰望星空，在梦境中预演未来的无限可能' },
-            { id: 'guardian', label: '守护者', icon: '🛡️', color: '#2563EB', desc: '保护内心的火焰，在风雨中坚守真实的自我' },
-            { id: 'wanderer', label: '漫游者', icon: '🌊', color: '#7C3AED', desc: '不受边界限制，在广阔的世界中寻找答案' },
-            { id: 'seeker', label: '追寻者', icon: '🔍', color: '#3B82F6', desc: '永不停歇的追问，在探索中接近生命的本质' },
+            { id: 'explorer', label: 'Explorer', icon: '🧭', color: '#06B6D4', desc: 'Seeking direction in endless possibilities, every choice is a definition of self' },
+            { id: 'creator', label: 'Creator', icon: '✨', color: '#7C3AED', desc: 'Transforming imagination into reality, shaping inner visions with hands' },
+            { id: 'thinker', label: 'Thinker', icon: '🔮', color: '#3B82F6', desc: 'Seeking truth in silence, illuminating unknown realms with rational light' },
+            { id: 'connector', label: 'Connector', icon: '🔗', color: '#165DFF', desc: 'Building bridges of hearts, letting isolated souls find each other' },
+            { id: 'dreamer', label: 'Dreamer', icon: '🌟', color: '#06B6D4', desc: 'Looking up at the starry sky, previewing infinite possibilities in dreams' },
+            { id: 'guardian', label: 'Guardian', icon: '🛡️', color: '#2563EB', desc: 'Protecting inner flames, staying true to self in storms' },
+            { id: 'wanderer', label: 'Wanderer', icon: '🌊', color: '#7C3AED', desc: 'Unbound by borders, seeking answers in the vast world' },
+            { id: 'seeker', label: 'Seeker', icon: '🔍', color: '#3B82F6', desc: 'Never-ending questioning, approaching the essence of life through exploration' },
         ];
 
         // 当前激活的身份
@@ -828,12 +945,12 @@
                     // 邮箱验证
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(email)) {
-                        alert('请输入有效的邮箱地址');
+                        alert('Please enter a valid email address');
                         return;
                     }
                     
                     // 模拟提交
-                    alert('感谢你的提交！我们会尽快与你联系。');
+                    alert('Thank you for your submission! We will contact you soon.');
                     
                     // 关闭模态框
                     closeModal();
@@ -841,6 +958,22 @@
                     // 重置表单
                     form.reset();
                 });
+            }
+        }
+
+        // 初始化星空背景
+        function initStarField() {
+            const starField = document.getElementById('star-field');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (2 + Math.random() * 2) + 's';
+                starField.appendChild(star);
             }
         }
 
@@ -854,6 +987,7 @@
             initModal();
             initIseeYouButton();
             initFormSubmission();
+            initStarField();
         });
     </script>
 </body>
