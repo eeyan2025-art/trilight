@@ -224,9 +224,9 @@
                 <span class="text-port-cyan">Roam</span>Port
             </a>
             <div class="hidden md:flex items-center gap-8">
-                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium">我是谁</a>
-                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium">我重要吗</a>
-                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium">我属于哪</a>
+                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium">被看见</a>
+                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium">被理解</a>
+                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium">被接纳</a>
             </div>
             <button class="md:hidden text-white p-2" aria-label="打开菜单" id="mobile-menu-btn">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -237,9 +237,9 @@
         <!-- 移动端菜单 -->
         <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
             <div class="flex flex-col gap-4">
-                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">我是谁</a>
-                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">我重要吗</a>
-                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">我属于哪</a>
+                <a href="#identity" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">被看见</a>
+                <a href="#value" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">被理解</a>
+                <a href="#belonging" class="text-white/80 hover:text-white transition-colors text-sm font-medium py-2">被接纳</a>
             </div>
         </div>
     </nav>
@@ -248,10 +248,9 @@
     <section id="identity" class="min-h-screen flex items-center justify-center relative px-4 py-20" aria-labelledby="identity-heading">
         <div class="max-w-6xl mx-auto w-full section-fade-in">
             <div class="text-center mb-12">
-                <h2 id="identity-heading" class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-port-cyan to-port-star bg-clip-text text-transparent">核心港口</span>
-                </h2>
-                <p class="text-white/60 text-lg font-body">我是谁 · 自我同一性的探索</p>
+                <button id="iseeyou-btn" class="glass-button text-white font-heading font-medium text-xl md:text-2xl">
+                    i see you
+                </button>
             </div>
             
             <div class="relative flex items-center justify-center min-h-[500px]">
@@ -300,7 +299,7 @@
                         <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-port-nebula rounded-full timeline-node z-10"></div>
                         <div class="md:w-5/12 md:text-right md:pr-12">
                             <div class="glass-card p-6 md:p-8">
-                                <div class="text-port-cyan text-sm font-medium mb-2">2024</div>
+                                <div class="text-port-cyan text-sm font-medium mb-2">2026</div>
                                 <h3 class="font-heading text-xl font-semibold mb-3">深度连接系统</h3>
                                 <p class="text-white/70 text-sm leading-relaxed">构建基于共鸣而非算法的社交网络，让真实的灵魂相遇，创造有意义的数字连接体验。</p>
                             </div>
@@ -314,38 +313,14 @@
                         <div class="hidden md:block md:w-5/12 md:pr-12"></div>
                         <div class="md:w-5/12 md:pl-12">
                             <div class="glass-card p-6 md:p-8">
-                                <div class="text-port-cyan text-sm font-medium mb-2">2023</div>
+                                <div class="text-port-cyan text-sm font-medium mb-2">2025</div>
                                 <h3 class="font-heading text-xl font-semibold mb-3">身份叙事平台</h3>
                                 <p class="text-white/70 text-sm leading-relaxed">开发多维度身份表达工具，帮助用户在数字空间中构建完整、真实的自我形象。</p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 项目3 -->
-                    <div class="md:flex md:items-center md:justify-between md:mb-16 relative">
-                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-port-primary rounded-full timeline-node z-10"></div>
-                        <div class="md:w-5/12 md:text-right md:pr-12">
-                            <div class="glass-card p-6 md:p-8">
-                                <div class="text-port-cyan text-sm font-medium mb-2">2022</div>
-                                <h3 class="font-heading text-xl font-semibold mb-3">心理安全空间</h3>
-                                <p class="text-white/70 text-sm leading-relaxed">创建无评判的数字环境，让用户能够自由探索、表达脆弱，建立深层信任。</p>
-                            </div>
-                        </div>
-                        <div class="hidden md:block md:w-5/12 md:pl-12"></div>
-                    </div>
-                    
-                    <!-- 项目4 -->
-                    <div class="md:flex md:items-center md:justify-between relative">
-                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-port-cyan rounded-full timeline-node z-10"></div>
-                        <div class="hidden md:block md:w-5/12 md:pr-12"></div>
-                        <div class="md:w-5/12 md:pl-12">
-                            <div class="glass-card p-6 md:p-8">
-                                <div class="text-port-cyan text-sm font-medium mb-2">2021</div>
-                                <h3 class="font-heading text-xl font-semibold mb-3">归属感引擎</h3>
-                                <p class="text-white/70 text-sm leading-relaxed">设计智能社群匹配系统，基于价值观和兴趣连接志同道合的灵魂。</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -388,16 +363,26 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <h3 id="modal-title" class="font-heading text-2xl font-semibold mb-4 text-port-cyan">欢迎来到 RoamPort</h3>
-                <p class="text-white/80 mb-6 leading-relaxed">在这里，你的独特性被珍视，你的声音被倾听。我们正在构建一个基于真实共鸣的社区，期待与你相遇。</p>
-                <div class="flex flex-col gap-3">
-                    <button class="glass-button text-white w-full text-center" onclick="alert('感谢你的兴趣！我们即将开放注册。')">
-                        加入等待列表
-                    </button>
-                    <button class="text-white/60 hover:text-white text-sm transition-colors" id="modal-cancel">
-                        稍后再说
-                    </button>
-                </div>
+                <h3 id="modal-title" class="font-heading text-2xl font-semibold mb-4 text-port-cyan">登记信息</h3>
+                <p class="text-white/80 mb-6 leading-relaxed">请留下你的信息，我们会与你取得联系。</p>
+                <form id="resonance-form" class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-white/70 text-sm font-medium mb-2">邮箱地址</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-port-cyan/50 text-white placeholder-white/40" placeholder="请输入你的邮箱">
+                    </div>
+                    <div>
+                        <label for="feedback" class="block text-white/70 text-sm font-medium mb-2">建议/反馈</label>
+                        <textarea id="feedback" name="feedback" rows="4" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-port-cyan/50 text-white placeholder-white/40" placeholder="请分享你的想法"></textarea>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <button type="submit" class="glass-button text-white w-full text-center">
+                            提交
+                        </button>
+                        <button type="button" class="text-white/60 hover:text-white text-sm transition-colors" id="modal-cancel">
+                            取消
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -405,9 +390,13 @@
     <!-- 页脚 -->
     <footer class="py-8 px-4 text-center relative z-10">
         <div class="max-w-6xl mx-auto">
-            <p class="text-white/40 text-sm font-body">
-                &copy; 2024 RoamPort. 在数字宇宙中寻找归属。
+            <p class="text-white/40 text-sm font-body mb-4">
+                &copy; RoamPort. 在数字宇宙中寻找归属。
             </p>
+            <div class="flex justify-center gap-6">
+                <a href="#" class="text-white/40 hover:text-white text-xs transition-colors">用户协议</a>
+                <a href="#" class="text-white/40 hover:text-white text-xs transition-colors">隐私协议</a>
+            </div>
         </div>
     </footer>
 
@@ -740,6 +729,8 @@
         }
 
         // 模态框
+        let closeModal;
+        
         function initModal() {
             const btn = document.getElementById('find-resonance-btn');
             const modal = document.getElementById('resonance-modal');
@@ -762,7 +753,7 @@
                 closeBtn.focus();
             }
             
-            function closeModal() {
+            closeModal = function() {
                 content.classList.remove('scale-100', 'opacity-100');
                 content.classList.add('scale-95', 'opacity-0');
                 
@@ -773,7 +764,7 @@
                 }, 300);
                 
                 btn.focus();
-            }
+            };
             
             btn.addEventListener('click', openModal);
             overlay.addEventListener('click', closeModal);
@@ -805,6 +796,54 @@
             });
         }
 
+        // i see you按钮功能
+        function initIseeYouButton() {
+            const btn = document.getElementById('iseeyou-btn');
+            const identitySection = document.getElementById('identity');
+            const tagsContainer = document.getElementById('identity-tags');
+            
+            btn.addEventListener('click', () => {
+                // 平滑滚动到身份标签区域
+                tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // 给按钮添加点击动画
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                }, 200);
+            });
+        }
+
+        // 表单提交功能
+        function initFormSubmission() {
+            const form = document.getElementById('resonance-form');
+            
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('email').value;
+                    const feedback = document.getElementById('feedback').value;
+                    
+                    // 邮箱验证
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        alert('请输入有效的邮箱地址');
+                        return;
+                    }
+                    
+                    // 模拟提交
+                    alert('感谢你的提交！我们会尽快与你联系。');
+                    
+                    // 关闭模态框
+                    closeModal();
+                    
+                    // 重置表单
+                    form.reset();
+                });
+            }
+        }
+
         // 初始化所有功能
         document.addEventListener('DOMContentLoaded', () => {
             initIdentityTags();
@@ -813,6 +852,8 @@
             initScrollAnimations();
             initNetworkCanvas();
             initModal();
+            initIseeYouButton();
+            initFormSubmission();
         });
     </script>
 </body>
